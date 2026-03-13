@@ -12,10 +12,3 @@ Feature: Validar la integridad de los servicios REST de la PetStore Swagger
     Then el sistema confirma que los servicios REST han funcionado correctamente
       And el sistema valida que las respuestas incluyan los codigos de estado esperados
       And el usuario cierra la sesion del sistema
-
-| Operación | Endpoint       | Método | Datos Enviados                          | Código de Estado Esperado |
-|-----------|----------------|--------|-----------------------------------------|---------------------------|
-| Crear     | /pet           | POST   | {"name": "Max", "id": 123, "type": "Dog"} | 200                       |
-| Consultar | /pet/123       | GET    | petId                                   | 200                       |
-| Actualizar| /pet           | PUT    | {"name": "Max", "id": 123, "type": "Cat"} | 200                       |
-| Eliminar  | /pet/123       | DELETE | petId                                   | 200                       |
