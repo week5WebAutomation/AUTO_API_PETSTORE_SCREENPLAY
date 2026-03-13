@@ -10,4 +10,4 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
 
-rootProject.name = 'auto_front_screenplay_init'
+rootProject.name = 'AUTO_API_PETSTORE_SCREENPLAY'

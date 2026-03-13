@@ -64,3 +64,21 @@ serenity {
 gradle.startParameter.continueOnFailure = true
 
 test.finalizedBy(aggregate, reports)
+
+// Serenity BDD y el Screenplay Pattern aplicado a REST
+
+// El Screenplay Pattern aplicado a REST es un patrón de diseño para la automatización de pruebas de servicios web que se centra en el usuario (actor) y las tareas que este realiza, en lugar de enfocarse únicamente en los detalles técnicos de las peticiones HTTP.
+
+// Componentes clave en REST
+// En el contexto de APIs, el patrón se estructura en cinco elementos principales:
+
+// 1. Actor: Es la entidad principal que interactúa con la API (por ejemplo, "El Administrador" o "Un Usuario Externo").
+// 2. Habilidad (Ability): Lo que el actor puede hacer. Para REST, se le asigna la habilidad de "llamar a un endpoint" (por ejemplo, usando la habilidad CallAnApi).
+// 3. Interacción (Interaction): Son las acciones básicas de bajo nivel, como realizar una petición GET, POST, PUT o DELETE.
+// 4. Tarea (Task): Agrupa varias interacciones para representar un flujo de negocio (por ejemplo, "Registrar un nuevo usuario" que internamente hace un POST y valida el estado).
+// 5. Pregunta (Question): Se utiliza para verificar el estado de la aplicación después de una acción, como validar si el código de respuesta fue 200 o si el cuerpo del JSON contiene un dato específico.
+
+// Beneficios del Screenplay Pattern
+// - Legibilidad: El código de prueba es más fácil de entender para personas no técnicas.
+// - Mantenibilidad: Los cambios en los detalles técnicos de las peticiones no afectan las pruebas de alto nivel.
+// - Escalabilidad: Permite reutilizar tareas y preguntas en diferentes escenarios.
