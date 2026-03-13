@@ -4,101 +4,103 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.And;
+import net.serenitybdd.screenplay.actors.OnStage;
+import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
+import net.serenitybdd.screenplay.rest.questions.ResponseConsequence;
+import net.serenitybdd.screenplay.rest.questions.TheResponse;
+import net.serenitybdd.screenplay.rest.questions.TheResponseStatusCode;
+import static org.hamcrest.Matchers.equalTo;
+import test.java.com.pets.tasks.PetPost;
+import test.java.com.pets.tasks.PetGet;
+import test.java.com.pets.tasks.PetPut;
+import test.java.com.pets.tasks.PetDelete;
+import test.java.com.pets.util.Constantes;
 
 public class RegistroStepDefinitions {
 
     @Given("el actor se registra en el sistema")
     public void registrarActor() {
-        // Step definition para registrar al actor
+        OnStage.theActorCalled(Constantes.ACTOR);
     }
 
     @Given("el actor se autentica con la API key especial")
     public void autenticarConApiKey() {
-        // Step definition para autenticar con la API key
+        OnStage.theActorInTheSpotlight().whoCan(CallAnApi.at(Constantes.URL));
     }
 
     @Given("el actor crea una mascota con los siguientes detalles")
     public void crearMascota() {
-        // Step definition para crear una mascota
+        OnStage.theActorInTheSpotlight().attemptsTo(
+            PetPost.defaultPet()
+        );
     }
 
     @When("el actor consulta la mascota por su ID")
     public void obtenerMascota() {
-        // Step definition para obtener una mascota
+        OnStage.theActorInTheSpotlight().attemptsTo(
+            PetGet.withId(10)
+        );
     }
 
     @Then("los detalles de la mascota deben coincidir con la mascota creada")
     public void validarMascotaCreada() {
-        // Step definition para validar la mascota creada
+        OnStage.theActorInTheSpotlight().should(
+            ResponseConsequence.seeThatResponse("El recurso debe existir",
+                response -> response.statusCode(200))
+        );
     }
 
     @And("el actor actualiza los detalles de la mascota con nueva información")
     public void actualizarMascota() {
-        // Step definition para actualizar una mascota
+        String updatedPetJson = "{\n" +
+                "  \"id\": 10,\n" +
+                "  \"name\": \"catty\",\n" +
+                "  \"category\": {\n" +
+                "    \"id\": 2,\n" +
+                "    \"name\": \"Cats\"\n" +
+                "  },\n" +
+                "  \"photoUrls\": [\"string\"],\n" +
+                "  \"tags\": [\n" +
+                "    {\n" +
+                "      \"id\": 0,\n" +
+                "      \"name\": \"string\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"status\": \"available\"\n" +
+                "}";
+        OnStage.theActorInTheSpotlight().attemptsTo(
+            PetPut.withBody(updatedPetJson)
+        );
     }
 
     @Then("los detalles actualizados de la mascota deben reflejarse")
     public void validarMascotaActualizada() {
-        // Step definition para validar la mascota actualizada
+        OnStage.theActorInTheSpotlight().should(
+            ResponseConsequence.seeThatResponse("El recurso actualizado debe existir",
+                response -> response.statusCode(200))
+        );
     }
 
     @And("el actor elimina la mascota por su ID")
     public void eliminarMascota() {
-        // Step definition para eliminar una mascota
+        OnStage.theActorInTheSpotlight().attemptsTo(
+            PetDelete.withId(10)
+        );
     }
 
     @Then("la mascota ya no debe existir")
     public void validarMascotaEliminada() {
-        // Step definition para validar que la mascota fue eliminada
+        OnStage.theActorInTheSpotlight().should(
+            ResponseConsequence.seeThatResponse("El recurso debe ser eliminado",
+                response -> response.statusCode(200))
+        );
     }
 
     @Then("se verifica que la mascota eliminada no exista y devuelva un error 404")
     public void verificarMascotaEliminada() {
-        // Step definition para verificar que la mascota eliminada no exista
-    }
-
-    @Given("el usuario se registra en el sistema con los detalles proporcionados")
-    public void registrarUsuario() {
-        // Step definition para registrar un usuario usando POST /user
-    }
-
-    @Then("el usuario cierra la sesión del sistema")
-    public void cerrarSesionUsuario() {
-        // Step definition para cerrar sesión usando GET /user/logout
-    }
-
-    @Given("el usuario configura la URL base del sistema como {string}")
-    public void configurarUrlBase(String urlBase) {
-        // Step definition para configurar la URL base del sistema
-    }
-
-    @Given("el usuario registra una nueva mascota con nombre {string} y tipo {string}")
-    public void registrarNuevaMascota(String nombre, String tipo) {
-        // Step definition para registrar una nueva mascota con nombre y tipo
-    }
-
-    @When("el usuario consulta la informacion de la mascota registrada")
-    public void consultarInformacionMascota() {
-        // Step definition para consultar la información de la mascota registrada
-    }
-
-    @And("actualiza el tipo de la mascota a {string}")
-    public void actualizarTipoMascota(String nuevoTipo) {
-        // Step definition para actualizar el tipo de la mascota
-    }
-
-    @And("elimina la mascota del sistema")
-    public void eliminarMascotaDelSistema() {
-        // Step definition para eliminar la mascota del sistema
-    }
-
-    @Then("el sistema confirma que los servicios REST han funcionado correctamente")
-    public void confirmarServiciosRestFuncionaron() {
-        // Step definition para confirmar que los servicios REST han funcionado correctamente
-    }
-
-    @Then("el sistema valida que las respuestas incluyan los codigos de estado esperados")
-    public void validarCodigosEstadoEsperados() {
-        // Step definition para validar que las respuestas incluyan los códigos de estado esperados
+        OnStage.theActorInTheSpotlight().should(
+            ResponseConsequence.seeThatResponse("El recurso eliminado no debe existir",
+                response -> response.statusCode(404))
+        );
     }
 }
