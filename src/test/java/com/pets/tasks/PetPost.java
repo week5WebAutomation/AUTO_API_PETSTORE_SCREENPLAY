@@ -1,10 +1,10 @@
 
-package test.java.com.pets.tasks;
+package com.pets.tasks;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.rest.interactions.Post;
-import net.thucydides.core.annotations.Step;
+import net.serenitybdd.annotations.Step;
 
 public class PetPost implements Task {
     private final String requestBody;

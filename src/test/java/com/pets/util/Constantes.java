@@ -1,4 +1,4 @@
-package test.java.com.pets.util;
+package com.pets.util;
 
 public class Constantes {
     public static final String URL = "https://petstore.swagger.io/#/";
