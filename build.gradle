@@ -49,6 +49,8 @@ dependencies {
         testImplementation "org.junit.vintage:junit-vintage-engine:${junit_vintage_engine_version}"
         implementation "ch.qos.logback:logback-classic:${logback_classic_version}"
         testImplementation "org.assertj:assertj-core:${assertj_core_version}"
+        testImplementation "io.rest-assured:rest-assured:5.3.0" // Added for REST API testing
+        testImplementation "com.google.code.gson:gson:2.10.1" // Added for JSON parsing
     }
 }
 
